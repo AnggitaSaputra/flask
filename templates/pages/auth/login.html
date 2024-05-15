@@ -1,0 +1,35 @@
+{% extends "layouts/authLayout.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/login.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    
+<!-- ini yang di Tab box login -->
+<form class="box" action="login" method="post">
+    <h1>َDimsum Buk'cik</h1>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <input type="text" name="username" placeholder="Username"> <!-- Penambahan atribut name -->
+    <input type="password" name="password" placeholder="Password"> <!-- Penambahan atribut name -->
+    <input type="submit" value="Login">
+    
+    <!-- btw buat code ke data base yang ini keknya ga kek gini deh, lupa" -->
+    <ul class="ul-navbar">
+        <li class="navbaro">
+            <a href="register" class="navbar-coy">Belum memiliki akun? Register</a>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,32 @@
+{% extends "layouts/appLayout.html" %}
+
+{% block title %}
+    Halaman Utama
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/index.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="nav-bar">
+            <h1 class="title"> Dim<span>sum</span></h1>
+            <p>Dimsum Bukcik</p>
+            <ul class="menu">
+                <li><a href="sales">SALES</a></li>
+                <li><a href="logout">LOGOUT</a></li>
+            </ul>
+        </div>
+
+        <div class="home">
+            <h1 class="title-1">Dimsum<span> Bukcik</span> akan selalu<br>mendapatkan para pelanggan</h1>
+            <p>kita disini menyediakan bermacam rasa unik dan terbaik dari dimsum</p>
+            <button type="button">Lihat menu</button>
+        </div>
+    </div>
+{% endblock %}
+
+
+

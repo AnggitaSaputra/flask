@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+    <main>
+        <div class="content">
+            <img src="{{ url_for('static', filename='assets/img/logo.jpg') }}" class="img-content"/>
+        </div>
+        
+        <div class="content-2">
+            <img src="{{ url_for('static', filename='assets/img/logo.jpg') }}" class="img-content-2"/>
+        </div> 
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
+

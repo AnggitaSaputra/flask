@@ -1,0 +1,32 @@
+{% extends "layouts/authLayout.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/login.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    
+<!-- ini yang di Tab box login -->
+<form class="box" action="register" method="post">
+    <h1>َDimsum Buk'cik</h1>
+    <input type="email" name="email" placeholder="email"> <!-- Penambahan atribut email -->
+    <input type="text" name="username" placeholder="Username"> <!-- Penambahan atribut name -->
+    <input type="password" name="password" placeholder="Password"> <!-- Penambahan atribut name -->
+    <input type="submit" value="Register">
+    
+    <ul class="ul-navbar">
+        <li class="navbaro">
+            <a href="login" class="navbar-coy">sudah memiliki akun? Login</a>
+        </li>
+    </ul>
+</form>
+
+{% endblock %}
+
+
+
