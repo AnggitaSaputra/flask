@@ -1,0 +1,30 @@
+{% extends "layouts/appLayout.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/menu.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <a href="{{ url_for('main.tambah_jurnal') }}">Tambah</a>
+    <h1>Jurnal Umum</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Keterangan</th>
+          <th>Debit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+        <tr>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+{% endblock %}

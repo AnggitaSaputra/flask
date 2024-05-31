@@ -1,0 +1,30 @@
+{% extends "layouts/appLayout.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/menu.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Tambah Menu</h1>
+    <form action="{{ url_for('main.tambah_menu') }}" method="POST">
+        <div class="form-group">
+            <label for="nama">Nama</label>
+            <input type="text" id="nama" name="nama" required>
+        </div>
+        <div class="form-group">
+            <label for="stok">Stok</label>
+            <input type="number" id="stok" name="stok" required>
+        </div>
+        <div class="form-group">
+            <label for="harga_beli">Harga Beli</label>
+            <input type="number" id="harga_beli" name="harga_beli" required>
+        </div>
+        <div class="form-group">
+            <label for="harga_jual">Harga Jual</label>
+            <input type="number" id="harga_jual" name="harga_jual" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Menu Item</button>
+    </form>
+</div>
+{% endblock %}

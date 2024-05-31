@@ -1,0 +1,40 @@
+{% extends "layouts/appLayout.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/menu.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Data Penjualan</h1>
+    <a href="{{ url_for('main.tambah_penjualan') }}">Tambah</a>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Tanggal</th>
+                <th>Nama Produk</th>
+                <th>Jumlah</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if sales_data %}
+            {% for sale in sales_data %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ sale.4 }}</td>
+                <td>{{ sale.6 }}</td>
+                <td>{{ sale.2 }}</td>
+                <td>{{ sale.3 }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="5" class="empty-data">Tidak ada data penjualan.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

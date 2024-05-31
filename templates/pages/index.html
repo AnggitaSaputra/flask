@@ -8,15 +8,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/index.css') }}">
 {% endblock %}
 
-
 {% block content %}
     <div class="container">
         <div class="nav-bar">
             <h1 class="title"> Dim<span>sum</span></h1>
             <p>Dimsum Bukcik</p>
             <ul class="menu">
-                <li><a href="sales">SALES</a></li>
-                <li><a href="logout">LOGOUT</a></li>
+                <li><a href="{{ url_for('main.home') }}">HOME</a></li>
+                <li><a href="{{ url_for('main.menu') }}">MENU</a></li>
+                {% if session.get('logged_in') %}
+                    <li><a href="{{ url_for('main.sales') }}">PENJUALAN</a></li>
+                    <li><a href="{{ url_for('main.jurnalumum') }}">JURNAL UMUM</a></li>
+                    <li><a href="{{ url_for('main.update_credit') }}">SETTING</a></li>
+                    <li><a href="{{ url_for('main.logout') }}">LOGOUT</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('main.contact') }}">CONTACT</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">LOGIN</a></li>
+                {% endif %}
             </ul>
         </div>
 
@@ -27,6 +35,3 @@
         </div>
     </div>
 {% endblock %}
-
-
-
