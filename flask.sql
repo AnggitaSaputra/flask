@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 15, 2024 at 07:18 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- Host: localhost:3306
+-- Generation Time: May 31, 2024 at 12:10 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.3.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,29 +24,83 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `jurnal_umum`
+--
+
+CREATE TABLE `jurnal_umum` (
+  `id` int NOT NULL,
+  `tanggal` datetime NOT NULL,
+  `keterangan` text NOT NULL,
+  `debit` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `jurnal_umum`
+--
+
+INSERT INTO `jurnal_umum` (`id`, `tanggal`, `keterangan`, `debit`) VALUES
+(1, '2024-05-09 00:00:00', 'awdawdawdawdawdawdawd', 250000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu`
+--
+
+CREATE TABLE `menu` (
+  `id` int NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `stok` bigint NOT NULL,
+  `harga_beli` bigint NOT NULL,
+  `harga_jual` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` (`id`, `nama`, `stok`, `harga_beli`, `harga_jual`) VALUES
+(1, 'test', 23, 2000, 4000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `penjualan`
 --
 
 CREATE TABLE `penjualan` (
-  `id` int(11) NOT NULL,
-  `nama_barang` varchar(255) NOT NULL,
-  `harga_barang` bigint(100) NOT NULL,
-  `jumlah_barang` int(11) NOT NULL,
-  `total_harga` bigint(100) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `id_menu` int NOT NULL,
+  `quantity` int NOT NULL,
+  `total` bigint NOT NULL,
+  `tanggal_penjualan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `penjualan`
 --
 
-INSERT INTO `penjualan` (`id`, `nama_barang`, `harga_barang`, `jumlah_barang`, `total_harga`, `created_at`, `updated_at`) VALUES
-(1, 'asas', 109000, 1, 1000000, '2024-05-15 23:57:36', '2024-05-15 23:57:36'),
-(2, 'aseadasd', 1231, 1, 2132123, '2024-05-16 00:02:38', '2024-05-16 00:02:38'),
-(3, '1231321', 12, 21, 213232131, '2024-05-16 00:05:08', '2024-05-16 00:05:08'),
-(4, 'aaaa', 1232, 2, 2222, '2024-05-16 00:09:37', '2024-05-16 00:09:37'),
-(5, 'aaaa', 232, 2, 2, '2024-05-16 00:10:39', '2024-05-16 00:10:39');
+INSERT INTO `penjualan` (`id`, `id_menu`, `quantity`, `total`, `tanggal_penjualan`) VALUES
+(9, 1, 12, 48000, '2024-05-30 18:59:26'),
+(10, 1, 2, 8000, '2024-05-30 19:02:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `setting`
+--
+
+CREATE TABLE `setting` (
+  `id` int NOT NULL,
+  `credit` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `setting`
+--
+
+INSERT INTO `setting` (`id`, `credit`) VALUES
+(1, 2250000);
 
 -- --------------------------------------------------------
 
@@ -55,12 +109,12 @@ INSERT INTO `penjualan` (`id`, `nama_barang`, `harga_barang`, `jumlah_barang`, `
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -68,18 +122,34 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `created_at`, `updated_at`) VALUES
-(5, 'aa@1231', 'aaa123', '$2b$12$FPp8lWwL25kXkbnvOHn0nu/LDRBJt/yzT0LT9FVQMBCqoBOLc90y.', '2024-05-15 23:08:18', '2024-05-15 23:08:18'),
-(6, 'aa@123', 'aa123', '$2b$12$97GIKUZhScPz1uRhNSqx2eZaqwT4DppZAVMmbDW0h7ZXm784rjWzK', '2024-05-15 23:12:09', '2024-05-15 23:12:09'),
-(7, 'test@123', 'test123', '$2b$12$QzdlHF.47qlFbwGtP500SuAkoRjFnrMHVDtr.OwAYikpf1hfRIEvu', '2024-05-15 23:21:51', '2024-05-15 23:21:51');
+(9, 'admin@gmail.com', 'admin', '$2b$12$O5Bv5EJ9NM7kOhTFx3OywOeSTiizIRciXR/GLFI1gK8/KRg6pKfZ6', '2024-05-29 22:14:59', '2024-05-29 22:14:59');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `jurnal_umum`
+--
+ALTER TABLE `jurnal_umum`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `penjualan`
 --
 ALTER TABLE `penjualan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `setting`
+--
+ALTER TABLE `setting`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -93,16 +163,34 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `jurnal_umum`
+--
+ALTER TABLE `jurnal_umum`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `setting`
+--
+ALTER TABLE `setting`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
