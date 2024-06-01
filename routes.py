@@ -65,7 +65,7 @@ def tambah_jurnal():
                 cur.execute(sql_insert, (tanggal, keterangan, debit))
 
                 # Update the credit in setting table based on the inserted debit
-                sql_update_credit = "UPDATE setting SET credit = credit + %s WHERE id = 1"  # Adjust WHERE clause as necessary
+                sql_update_credit = "UPDATE setting SET credit = credit - %s WHERE id = 1"  # Adjust WHERE clause as necessary
                 cur.execute(sql_update_credit, (debit,))
 
             mysql.connection.commit()

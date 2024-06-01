@@ -6,25 +6,28 @@
 
 {% block content %}
 <div class="container">
-    <a href="{{ url_for('main.tambah_jurnal') }}">Tambah</a>
     <h1>Jurnal Umum</h1>
+    <div class="button-group">
+        <a href="{{ url_for('main.home') }}" class="btn btn-back">Cancel</a>
+        <a href="{{ url_for('main.tambah_jurnal') }}" class="btn btn-primary">Add</a>
+    </div>
     <table>
-      <thead>
-        <tr>
-          <th>Tanggal</th>
-          <th>Keterangan</th>
-          <th>Debit</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in data %}
-        <tr>
-          <td>{{ row[1] }}</td>
-          <td>{{ row[2] }}</td>
-          <td>{{ row[3] }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+                <th>Debit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 {% endblock %}

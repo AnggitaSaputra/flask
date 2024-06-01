@@ -7,9 +7,12 @@
 {% block content %}
 <div class="container">
     <h1>Menu Dimsum</h1>
-    {% if session.get('logged_in') %}
-    <a href="{{ url_for('main.tambah_menu') }}" class="btn btn-primary">Add New Menu Item</a>
-    {% endif %}
+    <div class="button-group">
+        <a href="{{ url_for('main.home') }}" class="btn btn-back">Cancel</a>
+        {% if session.get('logged_in') %}
+            <a href="{{ url_for('main.tambah_menu') }}" class="btn btn-primary">Add New Menu Item</a>
+        {% endif %}
+    </div>
     <ul>
       {% for item in menu_items %}
       <li>

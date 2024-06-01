@@ -7,7 +7,10 @@
 {% block content %}
 <div class="container">
     <h1>Data Penjualan</h1>
-    <a href="{{ url_for('main.tambah_penjualan') }}">Tambah</a>
+    <div class="button-group">
+        <a href="{{ url_for('main.home') }}" class="btn btn-back">Cancel</a>
+        <a href="{{ url_for('main.tambah_penjualan') }}" class="btn btn-primary">Add</a>
+    </div>
     <table>
         <thead>
             <tr>
