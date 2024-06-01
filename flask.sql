@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 31, 2024 at 12:10 PM
+-- Generation Time: Jun 01, 2024 at 05:27 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.4
 
@@ -31,15 +31,19 @@ CREATE TABLE `jurnal_umum` (
   `id` int NOT NULL,
   `tanggal` datetime NOT NULL,
   `keterangan` text NOT NULL,
-  `debit` bigint NOT NULL
+  `debit` bigint NOT NULL,
+  `credit` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `jurnal_umum`
 --
 
-INSERT INTO `jurnal_umum` (`id`, `tanggal`, `keterangan`, `debit`) VALUES
-(1, '2024-05-09 00:00:00', 'awdawdawdawdawdawdawd', 250000);
+INSERT INTO `jurnal_umum` (`id`, `tanggal`, `keterangan`, `debit`, `credit`) VALUES
+(6, '2024-06-01 00:00:00', 'Sewa tukang', 200000, 5000000),
+(7, '2024-06-07 00:00:00', 'WAW', 25000, 50000),
+(8, '2024-07-03 00:00:00', 'WEW', 50000, 100000),
+(9, '2024-06-14 00:00:00', '-TEST\r\n-TEST', 6000, 50000);
 
 -- --------------------------------------------------------
 
@@ -60,7 +64,7 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`id`, `nama`, `stok`, `harga_beli`, `harga_jual`) VALUES
-(1, 'test', 23, 2000, 4000);
+(2, 'Barang Siapa, barang saya', 50, 2000, 5000);
 
 -- --------------------------------------------------------
 
@@ -81,26 +85,8 @@ CREATE TABLE `penjualan` (
 --
 
 INSERT INTO `penjualan` (`id`, `id_menu`, `quantity`, `total`, `tanggal_penjualan`) VALUES
-(9, 1, 12, 48000, '2024-05-30 18:59:26'),
-(10, 1, 2, 8000, '2024-05-30 19:02:15');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `setting`
---
-
-CREATE TABLE `setting` (
-  `id` int NOT NULL,
-  `credit` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `setting`
---
-
-INSERT INTO `setting` (`id`, `credit`) VALUES
-(1, 2250000);
+(11, 1, 12312312, 49249248000, '2024-06-01 23:51:09'),
+(12, 2, 5, 25000, '2024-06-01 23:54:49');
 
 -- --------------------------------------------------------
 
@@ -147,12 +133,6 @@ ALTER TABLE `penjualan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `setting`
---
-ALTER TABLE `setting`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -166,25 +146,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `jurnal_umum`
 --
 ALTER TABLE `jurnal_umum`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `setting`
---
-ALTER TABLE `setting`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
