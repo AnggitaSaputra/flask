@@ -4,7 +4,9 @@ Custom Log/Reg + CR
 
 ## Manajemen Dependensi & Runtime JavaScript
 
-- **pip**: Sistem manajemen paket yang digunakan untuk menginstal dan mengelola paket perangkat lunak yang ditulis dalam Python
+- **pip**: Sistem manajemen paket yang digunakan untuk menginstal dan mengelola paket perangkat lunak yang ditulis dalam Python.
+
+- **WARNING**: Delete .venv terlebih dahulu lalu install dependensi.
 
 ## Langkah Instalasi
 
