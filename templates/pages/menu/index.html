@@ -19,7 +19,7 @@
         <div class="menu-item">Nama {{ item.1 }}</div>
         <div class="price">Harga: Rp {{ item.4 }}</div>
         {% if session.get('logged_in') %}
-        <div class="price"">Stok: {{ item.2 }}</div>
+        <div class="price">Stok: {{ item.2 }}</div>
         <div class="price">Harga Beli: Rp {{ item.3 }}</div>
         {% endif %}
       </li>

@@ -19,6 +19,7 @@
                 <th>Nama Produk</th>
                 <th>Jumlah</th>
                 <th>Total</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +31,11 @@
                 <td>{{ sale.6 }}</td>
                 <td>{{ sale.2 }}</td>
                 <td>{{ sale.3 }}</td>
+                <td>
+                    <form action="{{ url_for('main.delete_sale', id=sale.0) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
             {% else %}

@@ -19,7 +19,6 @@
                 {% if session.get('logged_in') %}
                     <li><a href="{{ url_for('main.sales') }}">PENJUALAN</a></li>
                     <li><a href="{{ url_for('main.jurnalumum') }}">JURNAL UMUM</a></li>
-                    <li><a href="{{ url_for('main.update_credit') }}">SETTING</a></li>
                     <li><a href="{{ url_for('main.logout') }}">LOGOUT</a></li>
                 {% else %}
                     <li><a href="{{ url_for('main.contact') }}">CONTACT</a></li>

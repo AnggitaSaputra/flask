@@ -1,7 +1,7 @@
 {% extends "layouts/appLayout.html" %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/menu.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/menu.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -11,23 +11,88 @@
         <a href="{{ url_for('main.home') }}" class="btn btn-back">Cancel</a>
         <a href="{{ url_for('main.tambah_jurnal') }}" class="btn btn-primary">Add</a>
     </div>
-    <table>
+    <table id="jurnalTable">
         <thead>
             <tr>
                 <th>Tanggal</th>
                 <th>Keterangan</th>
                 <th>Debit</th>
+                <th>Credit</th>
+                <th>Aksi</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="jurnalBody">
             {% for row in data %}
             <tr>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>{{ row[3] }}</td>
+                <td class="date">{{ row[1].strftime('%Y-%m-%d') }}</td>
+                <td>
+                    {% for paragraph in row[2].split('\n') %}
+                        <p>{{ paragraph }}</p>
+                    {% endfor %}
+                </td>
+                <td class="debit">{{ row[3] }}</td>
+                <td class="credit">{{ row[4] }}</td>
+                <td>
+                    <form action="{{ url_for('main.delete_jurnal', id=row.0) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const rows = Array.from(document.querySelectorAll('#jurnalBody tr'));
+        const groupedData = {};
+
+        rows.forEach(row => {
+            const date = row.querySelector('.date').innerText;
+            const monthYear = date.substring(0, 7);
+            const debit = parseFloat(row.querySelector('.debit').innerText) || 0;
+            const credit = parseFloat(row.querySelector('.credit').innerText) || 0;
+
+            if (!groupedData[monthYear]) {
+                groupedData[monthYear] = { entries: [], totalDebit: 0, totalCredit: 0 };
+            }
+
+            groupedData[monthYear].entries.push(row);
+            groupedData[monthYear].totalDebit += debit;
+            groupedData[monthYear].totalCredit += credit;
+        });
+
+        const tableBody = document.getElementById('jurnalBody');
+        tableBody.innerHTML = '';
+
+        const currencyFormatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+        });
+
+        Object.keys(groupedData).forEach(monthYear => {
+            const group = groupedData[monthYear];
+
+            const monthRow = document.createElement('tr');
+            const monthCell = document.createElement('td');
+            monthCell.colSpan = 4;
+            monthCell.innerHTML = `<strong>${monthYear}</strong>`;
+            monthRow.appendChild(monthCell);
+            tableBody.appendChild(monthRow);
+
+            group.entries.forEach(entry => {
+                tableBody.appendChild(entry);
+            });
+
+            const totalRow = document.createElement('tr');
+            totalRow.innerHTML = `
+                <td colspan="2"><strong>Total for ${monthYear}</strong></td>
+                <td><strong>${currencyFormatter.format(group.totalDebit)}</strong></td>
+                <td><strong>${currencyFormatter.format(group.totalCredit)}</strong></td>
+            `;
+            tableBody.appendChild(totalRow);
+        });
+    });
+</script>
 {% endblock %}

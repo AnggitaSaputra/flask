@@ -43,6 +43,18 @@ def tambah_menu():
 
     return render_template("pages/menu/tambah.html", title="Tambah Menu")
 
+@main.route("/menu/delete/<int:id>", methods=["POST"])
+def delete_menu(id):
+    try:
+        with mysql.connection.cursor() as cur:
+            cur.execute("DELETE FROM menu WHERE id = %s", (id,))
+            mysql.connection.commit()
+        flash("Menu item deleted successfully", "success")
+    except Exception as e:
+        mysql.connection.rollback()
+        flash(f"An error occurred: {str(e)}", "danger")
+    return redirect(url_for('main.menu'))
+
 @main.route("/jurnalumum")
 def jurnalumum():
     with mysql.connection.cursor() as cur:
@@ -57,16 +69,13 @@ def tambah_jurnal():
         tanggal = request.form['tanggal']
         keterangan = request.form['keterangan']
         debit = request.form['debit']
+        credit = request.form['credit']
 
         try:
             with mysql.connection.cursor() as cur:
                 # Insert into jurnal_umum table
-                sql_insert = "INSERT INTO jurnal_umum (tanggal, keterangan, debit) VALUES (%s, %s, %s)"
-                cur.execute(sql_insert, (tanggal, keterangan, debit))
-
-                # Update the credit in setting table based on the inserted debit
-                sql_update_credit = "UPDATE setting SET credit = credit - %s WHERE id = 1"  # Adjust WHERE clause as necessary
-                cur.execute(sql_update_credit, (debit,))
+                sql_insert = "INSERT INTO jurnal_umum (tanggal, keterangan, debit, credit) VALUES (%s, %s, %s, %s)"
+                cur.execute(sql_insert, (tanggal, keterangan, debit, credit))
 
             mysql.connection.commit()
             flash('Data has been added and credit updated successfully!', 'success')
@@ -78,47 +87,17 @@ def tambah_jurnal():
 
     return render_template("pages/jurnalumum/tambah.html", title="jurnalumum")
 
-@main.route("/update_credit", methods=["GET", "POST"])
-def update_credit():
-    setting_data = None
+@main.route("/jurnalumum/delete/<int:id>", methods=["POST"])
+def delete_jurnal(id):
     try:
         with mysql.connection.cursor() as cur:
-            # Fetch the existing data
-            cur.execute("SELECT credit FROM setting LIMIT 1")
-            setting_data = cur.fetchone()
-
-        if request.method == "POST":
-            # Get data from the request form
-            credit = request.form.get("credit")
-
-            if not credit:
-                raise ValueError("Missing credit value")
-
-            with mysql.connection.cursor() as cur:
-                if setting_data:
-                    # Update the existing record
-                    query = """
-                        UPDATE setting
-                        SET credit = %s
-                        LIMIT 1
-                    """
-                    cur.execute(query, (credit,))
-                else:
-                    # Insert a new record
-                    query = """
-                        INSERT INTO setting (credit)
-                        VALUES (%s)
-                    """
-                    cur.execute(query, (credit,))
-                mysql.connection.commit()
-
-            return redirect(url_for('main.update_credit'))
-
+            cur.execute("DELETE FROM jurnal_umum WHERE id = %s", (id,))
+            mysql.connection.commit()
+        flash("Journal entry deleted successfully", "success")
     except Exception as e:
-        print("Error fetching/updating data:", e)
-        return "Error processing request", 500
-
-    return render_template("pages/setting/index.html", credit=setting_data[0] if setting_data else '')
+        mysql.connection.rollback()
+        flash(f"An error occurred: {str(e)}", "danger")
+    return redirect(url_for('main.jurnalumum'))
 
 @main.route("/sales")
 def sales():
@@ -137,6 +116,18 @@ def sales():
 
     print("Sales data:", sales_data)
     return render_template("pages/penjualan/index.html", title="Penjualan", sales_data=sales_data)
+
+@main.route("/sales/delete/<int:id>", methods=["POST"])
+def delete_sale(id):
+    try:
+        with mysql.connection.cursor() as cur:
+            cur.execute("DELETE FROM penjualan WHERE id = %s", (id,))
+            mysql.connection.commit()
+        flash("Sale deleted successfully", "success")
+    except Exception as e:
+        mysql.connection.rollback()
+        flash(f"An error occurred: {str(e)}", "danger")
+    return redirect(url_for('main.sales'))
 
 @main.route("/sales/tambah", methods=["GET", "POST"])
 def tambah_penjualan():

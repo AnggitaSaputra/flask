@@ -24,6 +24,16 @@ $ pip install bcrypt
 
 ### 2. Run Serverr dan Vite
 
+#### create env
+```bash
+$ py -3 -m venv .venv
+```
+
+#### activate env
+```bash
+$ .venv\Scripts\activate
+```
+
 ```bash
 $ flask run --debug
 ```
